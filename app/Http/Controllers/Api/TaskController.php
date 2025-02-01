@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
@@ -30,10 +29,10 @@ class TaskController extends Controller
      */
     public function store(Request $request)
     {
-        $task=Task::create([
-            'name'=>$request->name,
-            'description'=>$request->description,
-            'status'=>$request->status
+        $task = Task::create([
+            'name'        => $request->name,
+            'description' => $request->description,
+            'status'      => $request->status,
         ]);
         return new TaskResource($task);
     }
@@ -60,9 +59,9 @@ class TaskController extends Controller
     public function update(Request $request, Task $task)
     {
         $task->update([
-            'name'=>$request->name,
-            'description'=>$request->description,
-            'status'=>$request->status
+            'name'        => $request->name,
+            'description' => $request->description,
+            'status'      => $request->status,
         ]);
         return new TaskResource($task);
     }
@@ -70,9 +69,19 @@ class TaskController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Task $task)
+    public function destroy($id)
     {
+        $task = Task::find($id);
+        if (! $task) {
+            return response()->json([
+                'status'  => 404,
+                'message' => 'this task not found',
+            ]);
+        }
         $task->delete();
-        return response()->json(['message' => 'Task deleted successfully.']);
+        return response()->json([
+            'status'  => 200,
+            'message' => 'task deleted successfully',
+        ]);
     }
 }
