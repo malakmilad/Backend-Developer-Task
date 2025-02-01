@@ -15,9 +15,9 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->text('description');
-            $table->string('status');
-            $table->softDeletes();
+            $table->enum('status', ['pending', 'in_progress', 'completed'])->default('pending');
             //*to create delete_at column for tasks
+            $table->softDeletes();
             $table->timestamps();
         });
     }
