@@ -14,8 +14,7 @@ class TaskController extends Controller
      */
     public function index()
     {
-        $tasks=task::get();
-
+        return TaskResource::collection(task::all());
     }
 
     /**
@@ -74,5 +73,6 @@ class TaskController extends Controller
     public function destroy(Task $task)
     {
         $task->delete();
+        return response()->json(['message' => 'Task deleted successfully.']);
     }
 }
