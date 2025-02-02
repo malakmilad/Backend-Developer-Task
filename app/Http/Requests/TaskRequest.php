@@ -23,7 +23,7 @@ class TaskRequest extends FormRequest
     {
         return [
             'name' => 'required|string|max:255',
-            'description' => 'required|string',
+            'description' => 'nullable|string',
             'status' => 'required|in:pending,in_progress,completed',
         ];
     }
@@ -32,9 +32,8 @@ class TaskRequest extends FormRequest
         return
         [
             'name.required'=>'name is required',
-            'description.required'=>'description is required',
             'status.required'=>'status is required',
-            'status.in'=>'status must be pending,in_progress,completed'
+            'status.in' => 'Invalid status. Allowed values: pending, in_progress, completed.',
         ];
     }
 }

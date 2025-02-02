@@ -5,6 +5,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\TaskRequest;
 use App\Http\Resources\TaskResource;
 use App\Models\Task;
+use Illuminate\Http\Request;
 
 class TaskController extends Controller
 {
@@ -16,7 +17,7 @@ class TaskController extends Controller
         return response()->json([
             'status'  => 200,
             'message' => 'Task Retrieved Successfully',
-            'data'    => TaskResource::collection(task::all()),
+            'data'    => TaskResource::collection(Task::paginate(10)),
         ], 200);
     }
 
@@ -112,6 +113,27 @@ class TaskController extends Controller
         return response()->json([
             'status'  => 200,
             'message' => 'Task Deleted Successfully',
+        ], 200);
+    }
+    public function filter(Request $request)
+    {
+        $request->validate([
+            'status' => 'required|in:pending,in_progress,completed',
+        ], [
+            'status.required' => 'The status field is required.',
+            'status.in' => 'Invalid status. Allowed values: pending, in_progress, completed.',
+        ]);
+
+        $query = Task::query();
+
+        if ($request->status) {
+            $query->where('status', $request->status);
+        }
+
+        return response()->json([
+            'status'  => 200,
+            'message' => 'Task Retrieved Successfully',
+            'data'    => TaskResource::collection($query->paginate(10)),
         ], 200);
     }
 }

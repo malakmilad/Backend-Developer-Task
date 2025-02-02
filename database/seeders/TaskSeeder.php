@@ -13,10 +13,6 @@ class TaskSeeder extends Seeder
      */
     public function run(): void
     {
-        Task::create([
-            'name' => 'Sample Task',
-            'description' => 'This is a sample task description.',
-            'status' => 'pending',
-        ]);
+        Task::factory(10)->create();
     }
 }
