@@ -23,8 +23,18 @@ class TaskRequest extends FormRequest
     {
         return [
             'name' => 'required|string|max:255',
-            'description' => 'nullable|string',
+            'description' => 'required|string',
             'status' => 'required|in:pending,in_progress,completed',
+        ];
+    }
+    public function messages():array
+    {
+        return
+        [
+            'name.required'=>'name is required',
+            'description.required'=>'description is required',
+            'status.required'=>'status is required',
+            'status.in'=>'status must be pending,in_progress,completed'
         ];
     }
 }

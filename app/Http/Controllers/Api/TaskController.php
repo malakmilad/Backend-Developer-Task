@@ -2,6 +2,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\TaskRequest;
 use App\Http\Resources\TaskResource;
 use App\Models\Task;
 use Illuminate\Http\Request;
@@ -27,7 +28,7 @@ class TaskController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(TaskRequest $request)
     {
         $task = Task::create([
             'name'        => $request->name,
@@ -40,8 +41,15 @@ class TaskController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Task $task)
+    public function show($id)
     {
+        $task = Task::find($id);
+        if (! $task) {
+            return response()->json([
+                'status'  => 404,
+                'message' => 'this task not found',
+            ]);
+        }
         return new TaskResource($task);
     }
 
@@ -56,8 +64,15 @@ class TaskController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Task $task)
+    public function update(TaskRequest $request, $id)
     {
+        $task = Task::find($id);
+        if (! $task) {
+            return response()->json([
+                'status'  => 404,
+                'message' => 'this task not found',
+            ]);
+        }
         $task->update([
             'name'        => $request->name,
             'description' => $request->description,
