@@ -5,7 +5,6 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\TaskRequest;
 use App\Http\Resources\TaskResource;
 use App\Models\Task;
-use Illuminate\Http\Request;
 
 class TaskController extends Controller
 {
@@ -14,7 +13,11 @@ class TaskController extends Controller
      */
     public function index()
     {
-        return TaskResource::collection(task::all());
+        return response()->json([
+            'status'  => 200,
+            'message' => 'Task Retrieved Successfully',
+            'data'    => TaskResource::collection(task::all()),
+        ], 200);
     }
 
     /**
@@ -35,7 +38,11 @@ class TaskController extends Controller
             'description' => $request->description,
             'status'      => $request->status,
         ]);
-        return new TaskResource($task);
+        return response()->json([
+            'status'  => 200,
+            'message' => 'Task Created Successfully',
+            'data'    => new TaskResource($task),
+        ], 200);
     }
 
     /**
@@ -47,10 +54,14 @@ class TaskController extends Controller
         if (! $task) {
             return response()->json([
                 'status'  => 404,
-                'message' => 'this task not found',
-            ]);
+                'message' => 'This Task Not Found',
+            ], 404);
         }
-        return new TaskResource($task);
+        return response()->json([
+            'status'  => 200,
+            'message' => 'Task Retrieved Successfully',
+            'data'    => new TaskResource($task),
+        ], 200);
     }
 
     /**
@@ -70,15 +81,19 @@ class TaskController extends Controller
         if (! $task) {
             return response()->json([
                 'status'  => 404,
-                'message' => 'this task not found',
-            ]);
+                'message' => 'This Task Not Found',
+            ], 404);
         }
         $task->update([
             'name'        => $request->name,
             'description' => $request->description,
             'status'      => $request->status,
         ]);
-        return new TaskResource($task);
+        return response()->json([
+            'status'  => 200,
+            'message' => 'Task Updated Successfully',
+            'data'    => new TaskResource($task),
+        ], 200);
     }
 
     /**
@@ -90,13 +105,13 @@ class TaskController extends Controller
         if (! $task) {
             return response()->json([
                 'status'  => 404,
-                'message' => 'this task not found',
-            ]);
+                'message' => 'This Task Not Found',
+            ], 404);
         }
         $task->delete();
         return response()->json([
             'status'  => 200,
-            'message' => 'task deleted successfully',
-        ]);
+            'message' => 'Task Deleted Successfully',
+        ], 200);
     }
 }
