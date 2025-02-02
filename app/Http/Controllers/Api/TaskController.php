@@ -14,10 +14,19 @@ class TaskController extends Controller
      */
     public function index()
     {
+        $tasks = Task::paginate(10);
         return response()->json([
             'status'  => 200,
             'message' => 'Task Retrieved Successfully',
-            'data'    => TaskResource::collection(Task::paginate(10)),
+            'data'    => TaskResource::collection($tasks),
+            'meta'    => [
+                'current_page'  => $tasks->currentPage(),
+                'next_page_url' => $tasks->nextPageUrl(),
+                'prev_page_url' => $tasks->previousPageUrl(),
+                'per_page'      => $tasks->perPage(),
+                'total'         => $tasks->total(),
+                'last_page'     => $tasks->lastPage(),
+            ],
         ], 200);
     }
 
@@ -121,7 +130,7 @@ class TaskController extends Controller
             'status' => 'required|in:pending,in_progress,completed',
         ], [
             'status.required' => 'The status field is required.',
-            'status.in' => 'Invalid status. Allowed values: pending, in_progress, completed.',
+            'status.in'       => 'Invalid status. Allowed values: pending, in_progress, completed.',
         ]);
 
         $query = Task::query();
@@ -130,10 +139,21 @@ class TaskController extends Controller
             $query->where('status', $request->status);
         }
 
+        $tasks = $query->paginate(10);
+
         return response()->json([
             'status'  => 200,
-            'message' => 'Task Retrieved Successfully',
-            'data'    => TaskResource::collection($query->paginate(10)),
+            'message' => 'Tasks Retrieved Successfully',
+            'data'    => TaskResource::collection($tasks),
+            'meta'    => [
+                'current_page'  => $tasks->currentPage(),
+                'next_page_url' => $tasks->nextPageUrl(),
+                'prev_page_url' => $tasks->previousPageUrl(),
+                'per_page'      => $tasks->perPage(),
+                'total'         => $tasks->total(),
+                'last_page'     => $tasks->lastPage(),
+            ],
         ], 200);
     }
+
 }
