@@ -18,7 +18,7 @@ class AuthController extends Controller
             'email'    => $request->email,
             'password' => Hash::make($request->password),
         ]);
-        $token = $user->createToken('token')->plainTextToken;
+        $token = $user->createToken(name: 'token')->plainTextToken;
         return response()->json([
             'status'  => 200,
             'token' => $token,

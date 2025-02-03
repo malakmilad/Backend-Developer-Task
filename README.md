@@ -17,7 +17,7 @@ Ensure you have the following installed before setting up the project:
 1. Clone the repository:
 
    ```sh
-   git clone https://github.com/your-repository.git
+   git clone https://github.com/malakmilad/Backend-Developer-Task.git
    cd your-repository
    ```
 
@@ -113,6 +113,8 @@ The API is documented using Postman. You can access the full API documentation h
 | `POST` | `/api/tasks`    | Create a new task           | ✅ |
 | `PUT`  | `/api/tasks/{id}` | Update a task by ID       | ✅ |
 | `DELETE` | `/api/tasks/{id}` | Soft delete a task       | ✅ |
+| `POST` | `/api/taskList/filter` | Filter with status       | ✅ |
+
 
 **Example Task Object:**
 ```json
@@ -176,5 +178,5 @@ This project is licensed under the MIT License.
 
 ## Contact
 
-For any questions or contributions, feel free to contact me.
+For any questions or contributions, feel free to contact me at (malakmilad202@gmail.com or 012249666391) .
 
