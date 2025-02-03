@@ -1,4 +1,4 @@
-# Laravel Backend Developer Task - BeGroup
+# Laravel Backend Developer Task
 
 ## Introduction
 This project is a RESTful API for managing tasks using Laravel 10.x. It includes authentication via Laravel Sanctum, CRUD operations, request validation, and optional enhancements like pagination and resource classes.
