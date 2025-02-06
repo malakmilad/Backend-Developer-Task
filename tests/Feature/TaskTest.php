@@ -12,8 +12,8 @@ class TaskTest extends TestCase
     {
         $user = \App\Models\User::factory()->create([
             'name'     => 'malak',
-            'email'    => 'malakmilad202@gmail.com',
-            'password' => bcrypt('12345678'),
+            'email'    => 'malak@gmail.com',
+            'password' => '12345678',
         ]);
 
         $token = $user->createToken('token')->plainTextToken;
